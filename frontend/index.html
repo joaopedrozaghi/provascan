@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProvaScan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Prova<span>Scan</span></div>
+        <div class="nav-links">
+            <a href="#inicio">Inicio</a>
+            <a href="#enviar">Analisar</a>
+            <a href="#sobre">Sobre</a>
+        </div>
+        <div class="nav-tag">Analise com IA</div>
+    </nav>
+
+    <header class="hero" id="inicio">
+        <div class="hero-badges">
+            <span class="badge">● Analise com IA local</span>
+            <span class="badge">● 100% privado</span>
+        </div>
+        <h1>Analise de<br><span class="grad">Fragilidades</span></h1>
+        <p class="hero-sub">Envie uma prova e os dados dos alunos. A inteligencia artificial classifica os temas, aplica a Teoria Classica dos Testes e gera um diagnostico pedagogico completo — automaticamente.</p>
+        <a href="#enviar" class="btn-primary">Comecar Analise &nbsp;→</a>
+    </header>
+
+    <section class="upload-section" id="enviar">
+        <h2>Escolha o tipo de avaliacao</h2>
+        <p class="section-sub">Cada avaliacao tem seu formato de dados</p>
+
+        <div class="tabs">
+            <button class="tab-btn active" id="tab-enade" onclick="trocarAba('enade')">ENADE</button>
+            <button class="tab-btn" id="tab-ada" onclick="trocarAba('ada')">ADA</button>
+        </div>
+
+        <!-- ABA ENADE -->
+        <div class="aba-conteudo" id="aba-enade">
+            <p class="section-sub">Formato ENADE: PDF da prova + microdados (arq1 e arq3)</p>
+            <div class="upload-grid">
+                <label class="drop" id="drop-prova">
+                    <input type="file" id="file-prova" accept=".pdf" hidden>
+                    <div class="drop-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+                    </div>
+                    <div class="drop-title">Prova (PDF)</div>
+                    <div class="drop-name" id="name-prova">Clique para selecionar</div>
+                    <div class="drop-check">✓ Selecionado</div>
+                </label>
+                <label class="drop" id="drop-arq1">
+                    <input type="file" id="file-arq1" accept=".txt" hidden>
+                    <div class="drop-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><rect x="7" y="10" width="3" height="7"/><rect x="12" y="6" width="3" height="11"/><rect x="17" y="13" width="3" height="4"/></svg>
+                    </div>
+                    <div class="drop-title">Microdados arq1 (.txt)</div>
+                    <div class="drop-name" id="name-arq1">Clique para selecionar</div>
+                    <div class="drop-check">✓ Selecionado</div>
+                </label>
+                <label class="drop" id="drop-arq3">
+                    <input type="file" id="file-arq3" accept=".txt" hidden>
+                    <div class="drop-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>
+                    </div>
+                    <div class="drop-title">Microdados arq3 (.txt)</div>
+                    <div class="drop-name" id="name-arq3">Clique para selecionar</div>
+                    <div class="drop-check">✓ Selecionado</div>
+                </label>
+            </div>
+             <div class="config-row">
+                <label>Nome da analise:
+                    <input type="text" id="nome-analise" placeholder="Ex: ENADE 2023" style="width:200px;">
+                </label>
+                <label>CO_GRUPO:
+                    <input type="number" id="co-grupo" value="4004">
+                </label>
+                <button class="btn-primary" id="btn-analisar">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;vertical-align:-3px;margin-right:6px;"><path d="M13 2L4.5 13.5H11l-1 8.5L19.5 10H13z"/></svg>
+                    Analisar Prova
+                </button>
+            </div>
+        </div>
+
+        <!-- ABA ADA (em breve) -->
+        <div class="aba-conteudo" id="aba-ada" style="display:none;">
+            <div class="em-breve">
+                <div class="em-breve-badge">EM BREVE</div>
+                <div class="em-breve-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                </div>
+                <h3>Analise de provas ADA</h3>
+                <p class="section-sub">Esta funcionalidade estara disponivel em breve. O formato de envio dos dados da ADA sera configurado em uma proxima etapa do projeto.</p>
+                <div class="em-breve-tags">
+                    <span>Upload da prova</span>
+                    <span>Respostas dos alunos</span>
+                    <span>Analise automatica</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-box" id="progress-box" style="display:none;">
+            <div class="spinner"></div>
+            <p id="progress-text">Processando... isso pode levar alguns minutos.</p>
+        </div>
+    </section>
+
+    <!-- HISTORICO DE ANALISES -->
+    <section class="historico-section" id="historico-section">
+        <h2>Analises Salvas</h2>
+        <p class="section-sub">Clique em uma analise para ver os resultados na hora (sem reprocessar)</p>
+        <div class="historico-grid" id="historico-grid"></div>
+    </section>
+
+
+    <section class="results" id="results" style="display:none;">
+        <h2>Resultados da Analise</h2>
+    
+        <div class="cards" id="cards"></div>
+
+        <div class="filtros">
+            <label>Tema:
+                <select id="filtro-tema" onchange="desenharTudo()"></select>
+            </label>
+            <label>Nivel:
+                <select id="filtro-nivel" onchange="desenharTudo()">
+                    <option value="todos">Todos</option>
+                    <option value="dificil">Dificil (<30%)</option>
+                    <option value="medio">Medio (30-50%)</option>
+                    <option value="facil">Facil (&ge;50%)</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="panel"><h3>Ranking de Fragilidades por Tema</h3><div id="grafico-ranking"></div></div>
+        <div class="panel"><h3>Dificuldade por Questao</h3><div id="grafico-dificuldade"></div></div>
+        <div class="panel"><h3>Mapa: Dificuldade x Discriminacao</h3><div id="grafico-mapa"></div></div>
+        <div class="panel">
+            <h3>Detalhamento das Questoes</h3>
+            <input type="text" id="busca-tabela" placeholder="Buscar por tema..." oninput="desenharTudo()" class="busca-input">
+            <div id="tabela-container"></div>
+        </div>
+                <div class="panel">
+            <h3>Diagnostico Gerado pela IA</h3>
+            <div class="diagnostico" id="diagnostico"></div>
+            <div style="text-align:center; margin-top:24px;">
+                <button class="btn-primary" id="btn-pdf" onclick="baixarPDF()">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;vertical-align:-3px;margin-right:6px;"><path d="M12 16l-5-5h3V4h4v7h3z"/><path d="M20 18H4v2h16z"/></svg>
+                    Baixar Diagnostico em PDF
+                </button>
+            </div>
+        </div>
+
+    </section>
+
+    <footer>
+        <p id="sobre">ProvaScan · Analise de fragilidades educacionais com Inteligencia Artificial</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+# Dados pesados do ENADE (manter so no PC)
+dados/
+*.txt
+
+# Arquivos temporarios do Python
+__pycache__/
+*.pyc
+backend/src/__pycache__/
+backend/__pycache__/
+
+# Cache e historico gerados
+backend/src/cache/
+backend/historico/
+
+# Resultados gerados (opcional - pode manter se quiser)
+# resultados/
+
+# Arquivos de PDF grandes (provas) - opcional
+# *.pdf
